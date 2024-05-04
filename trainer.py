@@ -75,3 +75,5 @@ ssd_model.fit(ssd_train_feed,
               epochs=epochs,
               #callbacks=[checkpoint_callback, tensorboard_callback, learning_rate_callback]
               )
+
+ssd_model.save('rpn_model.h5')
