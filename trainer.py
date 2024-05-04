@@ -5,6 +5,10 @@ import augmentation
 from ssd_loss import CustomLoss
 from utils import bbox_utils, data_utils, io_utils, train_utils
 
+gpus = tf.config.list_physical_devices('GPU')
+tf.config.set_visible_devices(gpus[0], 'GPU')
+
+
 args = io_utils.handle_args()
 if args.handle_gpu:
     io_utils.handle_gpu_compatibility()
