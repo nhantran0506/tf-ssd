@@ -12,7 +12,7 @@ if args.handle_gpu:
 batch_size = 32
 epochs = 150
 load_weights = False
-with_voc_2012 = True
+with_voc_2012 = False
 backbone = args.backbone
 io_utils.is_valid_backbone(backbone)
 #
@@ -62,9 +62,9 @@ prior_boxes = bbox_utils.generate_prior_boxes(hyper_params["feature_map_shapes"]
 ssd_train_feed = train_utils.generator(train_data, prior_boxes, hyper_params)
 ssd_val_feed = train_utils.generator(val_data, prior_boxes, hyper_params)
 
-checkpoint_callback = ModelCheckpoint(ssd_model_path, monitor="val_loss", save_best_only=True, save_weights_only=True)
-tensorboard_callback = TensorBoard(log_dir=ssd_log_path)
-learning_rate_callback = LearningRateScheduler(train_utils.scheduler, verbose=0)
+# checkpoint_callback = ModelCheckpoint(ssd_model_path, monitor="val_loss", save_best_only=True, save_weights_only=True)
+# tensorboard_callback = TensorBoard(log_dir=ssd_log_path)
+# learning_rate_callback = LearningRateScheduler(train_utils.scheduler, verbose=0)
 
 step_size_train = train_utils.get_step_size(train_total_items, batch_size)
 step_size_val = train_utils.get_step_size(val_total_items, batch_size)
@@ -73,4 +73,5 @@ ssd_model.fit(ssd_train_feed,
               validation_data=ssd_val_feed,
               validation_steps=step_size_val,
               epochs=epochs,
-              callbacks=[checkpoint_callback, tensorboard_callback, learning_rate_callback])
+              #callbacks=[checkpoint_callback, tensorboard_callback, learning_rate_callback]
+              )
